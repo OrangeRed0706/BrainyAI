@@ -8,11 +8,11 @@ interface IGoogleAnalyticsProviderProps {
 export const GoogleAnalyticsContext = React.createContext({} as IGoogleAnalyticsProviderProps);
 
 export default function GoogleAnalyticsProvider({children}) {
-    const analytics = useRef(new Analytics());
+  const analytics = useRef(new Analytics());
 
-    return <GoogleAnalyticsContext.Provider value={{
-        analytics
-    }}>
-        {children}
-    </GoogleAnalyticsContext.Provider>;
+  return <GoogleAnalyticsContext.Provider value={{
+    analytics
+  }}>
+    {children}
+  </GoogleAnalyticsContext.Provider>;
 }

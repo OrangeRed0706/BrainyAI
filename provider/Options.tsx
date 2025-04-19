@@ -9,12 +9,12 @@ interface IOptionsContext {
 export const OptionsContext = createContext({} as IOptionsContext);
 
 export default function OptionsProvider({children}: {children: React.ReactNode}) {
-    const [messageApi, holder] = useMessage();
+  const [messageApi, holder] = useMessage();
 
-    return <OptionsContext.Provider value={{
-        messageApi
-    }}>
-        {children}
-        {holder}
-    </OptionsContext.Provider>;
+  return <OptionsContext.Provider value={{
+    messageApi
+  }}>
+    {children}
+    {holder}
+  </OptionsContext.Provider>;
 }

@@ -8,14 +8,14 @@ import Icon from "data-base64:~assets/icon.svg";
 import IconShortCut from "data-base64:~assets/icon_shortcut.svg";
 
 export {
-    CloseIcon,
-    SearchIcon,
-    AskIcon,
-    TriangleSelectIcon,
-    PupHeaderIcon,
-    AskEditIcon,
-    Icon,
-    IconShortCut,
+  CloseIcon,
+  SearchIcon,
+  AskIcon,
+  TriangleSelectIcon,
+  PupHeaderIcon,
+  AskEditIcon,
+  Icon,
+  IconShortCut,
 };
 
 

@@ -3,24 +3,24 @@ import CInStandaloneWindowChallenge from "~component/xframe/challenge/c-in-stand
 import {SiteName} from "~provider/sidepanel/SidePanelProvider";
 
 export const config: PlasmoCSConfig = {
-    matches: ['https://*.perplexity.ai/*--oppcw*'],
-    all_frames: true,
-    run_at: 'document_start'
+  matches: ['https://*.perplexity.ai/*--oppcw*'],
+  all_frames: true,
+  run_at: 'document_start'
 };
 
 export default function PerplexityInStandaloneChallengeWindow() {
-    const targetSourceValidator = function () {
-        const canonicalElement =  document.querySelectorAll("title");
+  const targetSourceValidator = function () {
+    const canonicalElement =  document.querySelectorAll("title");
 
-        if (canonicalElement.length) {
-            return canonicalElement[0]?.textContent?.toLowerCase() === "perplexity";
-        }
+    if (canonicalElement.length) {
+      return canonicalElement[0]?.textContent?.toLowerCase() === "perplexity";
+    }
 
-        return false;
-    };
+    return false;
+  };
 
-    return <div>
-        <CInStandaloneWindowChallenge siteName={SiteName.PERPLEXITY}
-            verifySuccessValidator={targetSourceValidator}/>
-    </div>;
+  return <div>
+    <CInStandaloneWindowChallenge siteName={SiteName.PERPLEXITY}
+      verifySuccessValidator={targetSourceValidator}/>
+  </div>;
 }

@@ -5,7 +5,7 @@ import '~base.scss';
 import GoogleAnalyticsProvider from "~provider/GoogleAnalyticsProvider";
 
 export default function () {
-    return  <GoogleAnalyticsProvider>
-        <RouterProvider router={router}/>
-    </GoogleAnalyticsProvider>;
+  return  <GoogleAnalyticsProvider>
+    <RouterProvider router={router}/>
+  </GoogleAnalyticsProvider>;
 }

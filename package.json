@@ -1,8 +1,8 @@
 {
-  "name": "brainy_ai",
-  "displayName": "BrainyAI",
-  "version": "0.0.7",
-  "description": "",
+  "name": "lynn_ai",
+  "displayName": "LynnAI",
+  "version": "1.0.0",
+  "description": "A browser extension for accessing AI models with your own API keys",
   "scripts": {
     "dev": "plasmo dev",
     "build": "plasmo build",
@@ -39,7 +39,7 @@
     "websocket-as-promised": "^2.0.1"
   },
   "devDependencies": {
-    "@eslint/js": "^8.56.0",
+    "@eslint/js": "^8.57.0",
     "@ianvs/prettier-plugin-sort-imports": "4.1.1",
     "@types/chrome": "0.0.258",
     "@types/markdown-it": "^14.1.1",
@@ -47,18 +47,18 @@
     "@types/react": "18.2.48",
     "@types/react-dom": "18.2.18",
     "antd": "^5.17.2",
-    "autoprefixer": "^10.4.18",
+    "autoprefixer": "^10.4.19",
     "console-browserify": "^1.2.0",
-    "eslint": "^8.56.0",
+    "eslint": "^8.57.0",
     "husky": "^9.0.11",
-    "path-browserify": "^1.0.0",
-    "postcss": "^8.4.35",
+    "path-browserify": "^1.0.1",
+    "postcss": "^8.4.38",
     "prettier": "3.2.4",
     "process": "^0.11.10",
     "tailwindcss": "^3.4.1",
     "typescript": "5.3.3",
     "typescript-eslint": "^7.8.0",
-    "url": "^0.11.0"
+    "url": "^0.11.3"
   },
   "manifest": {
     "web_accessible_resources": [
@@ -79,7 +79,7 @@
       "wss://*/*"
     ],
     "action": {
-      "default_title": "BrainyAI"
+      "default_title": "LynnAI"
     },
     "permissions": [
       "declarativeNetRequest",

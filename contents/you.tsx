@@ -4,18 +4,18 @@ import styleText from 'data-text:~base.scss';
 import {SiteName} from "~provider/sidepanel/SidePanelProvider";
 
 export const getStyle: PlasmoGetStyle = () => {
-    const style = document.createElement("style");
-    style.textContent = styleText;
-    return style;
+  const style = document.createElement("style");
+  style.textContent = styleText;
+  return style;
 };
 
 export const config: PlasmoCSConfig = {
-    matches: ['https://you.com/*'],
-    all_frames: true
+  matches: ['https://you.com/*'],
+  all_frames: true
 };
 
 export default function You() {
-    return <div>
-        <CInPanelChallenge siteName={SiteName.YOU}/>
-    </div>;
+  return <div>
+    <CInPanelChallenge siteName={SiteName.YOU}/>
+  </div>;
 }

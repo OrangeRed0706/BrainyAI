@@ -1,5 +1,5 @@
 export default function SidePanelLayout() {
-    return <div>
+  return <div>
 
-    </div>;
+  </div>;
 }

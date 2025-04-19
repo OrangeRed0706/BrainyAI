@@ -18,66 +18,66 @@ interface IConversationContext {
 }
 
 export class ConversationMessage {
-    id: string;
-    foree: 'bot' | 'user';
-    data: IAskAi;
-    botProviders?: Ms;
+  id: string;
+  foree: 'bot' | 'user';
+  data: IAskAi;
+  botProviders?: Ms;
 
-    constructor(foree: 'bot' | 'user', data: IAskAi, botProviders?: Ms) {
-        // random id with timestamp
-        this.id = `${Date.now()}-${Math.random()}`;
-        this.foree = foree;
-        this.data = data;
-        this.botProviders = botProviders;
+  constructor(foree: 'bot' | 'user', data: IAskAi, botProviders?: Ms) {
+    // random id with timestamp
+    this.id = `${Date.now()}-${Math.random()}`;
+    this.foree = foree;
+    this.data = data;
+    this.botProviders = botProviders;
 
-        return this;
-    }
+    return this;
+  }
 }
 
 export const ConversationContext = React.createContext<IConversationContext>({} as IConversationContext);
 
 export const ConversationProvider = ({children}: { children: React.ReactNode }) => {
-    const {askAiData} = useContext(SidePanelContext);
-    const [messages, setMessages] = useState<IConversationContext['messages']>([]);
-    const [globalConversationId, setGlobalConversationId] = useState<IConversationContext['conversationId']>(createUuid());
-    const [isGeneratingMessage, setIsGeneratingMessage] = useState<IConversationContext['isGeneratingMessage']>(false);
-    const [conversationTitle, setConversationTitle] = useState<string>('');
-    const {currentBots} = useContext(ModelManagementContext);
+  const {askAiData} = useContext(SidePanelContext);
+  const [messages, setMessages] = useState<IConversationContext['messages']>([]);
+  const [globalConversationId, setGlobalConversationId] = useState<IConversationContext['conversationId']>(createUuid());
+  const [isGeneratingMessage, setIsGeneratingMessage] = useState<IConversationContext['isGeneratingMessage']>(false);
+  const [conversationTitle, setConversationTitle] = useState<string>('');
+  const {currentBots} = useContext(ModelManagementContext);
 
-    const resetConversation = () => {
-        setGlobalConversationId(createUuid());
-        setIsGeneratingMessage(false);
-        setMessages([]);
+  const resetConversation = () => {
+    setGlobalConversationId(createUuid());
+    setIsGeneratingMessage(false);
+    setMessages([]);
+  };
+
+  useEffect( () => {
+    if (askAiData) {
+      const userMessage = new ConversationMessage('user', askAiData);
+      const botMessage = new ConversationMessage('bot', askAiData, currentBots);
+
+      setMessages(preState => [...preState, userMessage, botMessage]);
+    }
+  }, [askAiData]);
+
+  useEffect(() => {
+    eventBus.on('newChat', resetConversation);
+
+    return () => {
+      eventBus.removeListener('newChat', resetConversation);
     };
+  },[]);
 
-    useEffect( () => {
-        if (askAiData) {
-            const userMessage = new ConversationMessage('user', askAiData);
-            const botMessage = new ConversationMessage('bot', askAiData, currentBots);
-
-            setMessages(preState => [...preState, userMessage, botMessage]);
-        }
-    }, [askAiData]);
-
-    useEffect(() => {
-        eventBus.on('newChat', resetConversation);
-
-        return () => {
-            eventBus.removeListener('newChat', resetConversation);
-        };
-    },[]);
-
-    return <ConversationContext.Provider value={{
-        messages,
-        setMessages,
-        conversationId: globalConversationId,
-        setConversationId: setGlobalConversationId,
-        isGeneratingMessage,
-        setIsGeneratingMessage,
-        conversationTitle,
-        setConversationTitle,
-        resetConversation
-    }}>
-        {children}
-    </ConversationContext.Provider>;
+  return <ConversationContext.Provider value={{
+    messages,
+    setMessages,
+    conversationId: globalConversationId,
+    setConversationId: setGlobalConversationId,
+    isGeneratingMessage,
+    setIsGeneratingMessage,
+    conversationTitle,
+    setConversationTitle,
+    resetConversation
+  }}>
+    {children}
+  </ConversationContext.Provider>;
 };

@@ -34,127 +34,127 @@ export const PROMPT_PLACEHOLDER_TEXT = "${texts}";
 export const PROMPT_PLACEHOLDER_LANG = "${lang}";
 
 export const getGoogleQuery = function (url: string): string  {
-    if (url.indexOf('www.google.com') === -1) {
-        return "";
-    }
+  if (url.indexOf('www.google.com') === -1) {
+    return "";
+  }
 
-    const urlObj = new URL(url);
-    const urlParams = urlObj.searchParams;
-    return urlParams.get('q') ?? "";
+  const urlObj = new URL(url);
+  const urlParams = urlObj.searchParams;
+  return urlParams.get('q') ?? "";
 };
 
 export const appendParamToUrl = function appendParamToUrl(url: string, paramKey: string, paramValue: any) {
-    // Check if URL already has a query string
-    const hasQuery = url.includes('?');
+  // Check if URL already has a query string
+  const hasQuery = url.includes('?');
 
-    // Use '&' if query exists, '?' if not
-    const separator = hasQuery ? '&' : '?';
+  // Use '&' if query exists, '?' if not
+  const separator = hasQuery ? '&' : '?';
 
-    // Encode the parameter value to ensure special characters do not break the URL structure
-    const encodedValue = encodeURIComponent(paramValue);
+  // Encode the parameter value to ensure special characters do not break the URL structure
+  const encodedValue = encodeURIComponent(paramValue);
 
-    // Append and return the complete URL
-    return url + separator + paramKey + '=' + encodedValue;
+  // Append and return the complete URL
+  return url + separator + paramKey + '=' + encodedValue;
 };
 
 export const addCspParamsToUrl = function addCspParams(url: string) {
-    return appendParamToUrl(url, R_SCP_PARAM, 1);
+  return appendParamToUrl(url, R_SCP_PARAM, 1);
 };
 
 export const addMobileHeaderToUrl = function addMobileHeader(url: string) {
-    return appendParamToUrl(url, '--in-mobile', 1);
+  return appendParamToUrl(url, '--in-mobile', 1);
 };
 
 export const openInPlugin = function (url: string) {
-    return url.includes(IS_OPEN_IN_PLUGIN);
+  return url.includes(IS_OPEN_IN_PLUGIN);
 };
 
 export const btoaObj = function (obj: any) {
-    for (const key in obj) {
-        obj[key] = btoa(obj[key].toString());
-    }
+  for (const key in obj) {
+    obj[key] = btoa(obj[key].toString());
+  }
 
-    return obj;
+  return obj;
 };
 
 export const atobObj = function (obj: any) {
-    for (const key in obj) {
-        obj[key] = atob(obj[key]);
-    }
+  for (const key in obj) {
+    obj[key] = atob(obj[key]);
+  }
 
-    return obj;
+  return obj;
 };
 
 export const getLatestState = function<T> (dispatch: Dispatch<SetStateAction<T>>):Promise<T> {
-    return new Promise<T>( (resolve) => {
-        dispatch(prevState => {
-            resolve(prevState);
+  return new Promise<T>( (resolve) => {
+    dispatch(prevState => {
+      resolve(prevState);
 
-            return prevState;
-        });
+      return prevState;
     });
+  });
 };
 
 
 export const createUuid = function () {
-    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-        const r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8);
-        return v.toString(16);
-    });
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+    const r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8);
+    return v.toString(16);
+  });
 };
 
 export const openWindowInFrontend = function (href: string) {
-    chrome.windows.getCurrent(function (currentWindow) {
-        void chrome.windows.create({
-            url: href,
-            left: currentWindow.left,
-            top: currentWindow.top,
-            width: currentWindow.width,
-            height: currentWindow.height,
-            type: 'normal'
-        });
+  chrome.windows.getCurrent(function (currentWindow) {
+    void chrome.windows.create({
+      url: href,
+      left: currentWindow.left,
+      top: currentWindow.top,
+      width: currentWindow.width,
+      height: currentWindow.height,
+      type: 'normal'
     });
+  });
 };
 
 type DebounceFunction<T extends (...args: any[]) => any> = (...args: Parameters<T>) => void;
 
 export function debounce<T extends (...args: any[]) => any>(
-    callback: T,
-    wait: number,
+  callback: T,
+  wait: number,
 ): DebounceFunction<T> {
-    let timeoutId: ReturnType<typeof setTimeout> | null = null;
+  let timeoutId: ReturnType<typeof setTimeout> | null = null;
 
-    const debounced: DebounceFunction<T> = (...args: Parameters<T>) => {
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-expect-error
-        clearTimeout(timeoutId);
-        timeoutId = setTimeout(() => {
-            callback(...args);
-        }, wait);
-    };
+  const debounced: DebounceFunction<T> = (...args: Parameters<T>) => {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-expect-error
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => {
+      callback(...args);
+    }, wait);
+  };
 
-    return debounced;
+  return debounced;
 }
 
 export function getCookiesInBackendByDomain(domain: string): Promise<string> {
-    return new Promise((resolve) => {
-        // .perplexity.ai
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-expect-error
-        chrome.cookies.getAll({domain , partitionKey: {
-            // topLevelSite: "https://perplexity.ai",
-        }}, (cookies) => {
-            resolve(cookies.map(item => {
-                return `${item.name}=${item.value}`;
-            }).join(";"));
-        });
+  return new Promise((resolve) => {
+    // .perplexity.ai
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-expect-error
+    chrome.cookies.getAll({domain , partitionKey: {
+      // topLevelSite: "https://perplexity.ai",
+    }}, (cookies) => {
+      resolve(cookies.map(item => {
+        return `${item.name}=${item.value}`;
+      }).join(";"));
     });
+  });
 }
 
 export function getTimezoneOffsetMin() {
-    const now = new Date();
+  const now = new Date();
 
-    const timezoneOffsetMin = now.getTimezoneOffset();
+  const timezoneOffsetMin = now.getTimezoneOffset();
 
-    return -timezoneOffsetMin;
+  return -timezoneOffsetMin;
 }

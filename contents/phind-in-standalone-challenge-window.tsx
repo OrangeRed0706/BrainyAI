@@ -3,25 +3,25 @@ import CInStandaloneWindowChallenge from "~component/xframe/challenge/c-in-stand
 import {SiteName} from "~provider/sidepanel/SidePanelProvider";
 
 export const config: PlasmoCSConfig = {
-    matches: ['https://*.phind.com/*--oppcw*'],
-    all_frames: true,
-    run_at: 'document_start'
+  matches: ['https://*.phind.com/*--oppcw*'],
+  all_frames: true,
+  run_at: 'document_start'
 };
 
 export default function PhindInChallengeWindow() {
-    const targetSourceValidator = function () {
-        const canonicalElement = document.querySelector('link[rel="search"]');
+  const targetSourceValidator = function () {
+    const canonicalElement = document.querySelector('link[rel="search"]');
 
-        if (canonicalElement) {
-            const href = canonicalElement.getAttribute('title');
-            return href?.indexOf("phind.com") !== -1;
-        }
+    if (canonicalElement) {
+      const href = canonicalElement.getAttribute('title');
+      return href?.indexOf("phind.com") !== -1;
+    }
 
-        return false;
-    };
+    return false;
+  };
 
-    return <div>
-        <CInStandaloneWindowChallenge siteName={SiteName.PHIND}
-            verifySuccessValidator={targetSourceValidator}/>
-    </div>;
+  return <div>
+    <CInStandaloneWindowChallenge siteName={SiteName.PHIND}
+      verifySuccessValidator={targetSourceValidator}/>
+  </div>;
 }

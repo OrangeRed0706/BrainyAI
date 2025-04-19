@@ -50,79 +50,79 @@ interface IModelManagementProvider {
 export const ModelManagementContext = createContext({} as IModelManagementProvider);
 
 export default function ModelManagementProvider({children}) {
-    const defaultModels: Ms = [ChatGPT35Turbo, CopilotBot, KimiBot];
-    const [currentBots, setCurrentBots] = useState<IModelManagementProvider['currentBots']>(defaultModels);
-    const allModels = useRef<Ms>([Llama3SonarLarge32KChat, Llama3SonarLarge32kOnline, Claude3Haiku, ChatGPT35Turbo, ChatGPT4O, ChatGPT4Turbo, CopilotBot, KimiBot, Llama370bInstruct, Gemma7bIt, Llavav1634b, Mistral822b]);
-    const storage = new Storage();
-    const [isLoaded, setIsLoaded] = useState(false);
-    const categoryModels = useRef<CMs>([
-        {
-            label: "OpenAI",
-            models: [ChatGPT35Turbo, ChatGPT4Turbo, ChatGPT4O]
-        },
-        {
-            label: "Microsoft",
-            models: [CopilotBot]
-        },
-        {
-            label: "Moonshot",
-            models: [KimiBot]
-        },
-        {
-            label: "Perplexity",
-            models: [Llama3SonarLarge32KChat, Llama3SonarLarge32kOnline, Claude3Haiku, Llama370bInstruct, Gemma7bIt, Llavav1634b, Mistral822b]
-        }]
-    );
+  const defaultModels: Ms = [ChatGPT35Turbo, CopilotBot, KimiBot];
+  const [currentBots, setCurrentBots] = useState<IModelManagementProvider['currentBots']>(defaultModels);
+  const allModels = useRef<Ms>([Llama3SonarLarge32KChat, Llama3SonarLarge32kOnline, Claude3Haiku, ChatGPT35Turbo, ChatGPT4O, ChatGPT4Turbo, CopilotBot, KimiBot, Llama370bInstruct, Gemma7bIt, Llavav1634b, Mistral822b]);
+  const storage = new Storage();
+  const [isLoaded, setIsLoaded] = useState(false);
+  const categoryModels = useRef<CMs>([
+    {
+      label: "OpenAI",
+      models: [ChatGPT35Turbo, ChatGPT4Turbo, ChatGPT4O]
+    },
+    {
+      label: "Microsoft",
+      models: [CopilotBot]
+    },
+    {
+      label: "Moonshot",
+      models: [KimiBot]
+    },
+    {
+      label: "Perplexity",
+      models: [Llama3SonarLarge32KChat, Llama3SonarLarge32kOnline, Claude3Haiku, Llama370bInstruct, Gemma7bIt, Llavav1634b, Mistral822b]
+    }]
+  );
 
-    const handleModelStorge = async () => {
-        try {
-            const value = await storage.get<string[]>("currentModelsKey");
+  const handleModelStorge = async () => {
+    try {
+      const value = await storage.get<string[]>("currentModelsKey");
 
-            const arr: Ms = [];
+      const arr: Ms = [];
 
-            if (value && value.length) {
-                Logger.log('local currentModels:',value);
-                value.forEach((ele) => {
-                    allModels.current.forEach((item) => {
-                        if (item.botName === ele) {
-                            arr.push(item);
-                        }
-                    });
-                });
-
-                if (arr.length) {
-                    setCurrentBots(arr);
-                }else {
-                    setCurrentBots(defaultModels);
-                }
+      if (value && value.length) {
+        Logger.log('local currentModels:',value);
+        value.forEach((ele) => {
+          allModels.current.forEach((item) => {
+            if (item.botName === ele) {
+              arr.push(item);
             }
-        }catch (e) {
-            // ignore
+          });
+        });
+
+        if (arr.length) {
+          setCurrentBots(arr);
+        }else {
+          setCurrentBots(defaultModels);
         }
-        finally {
-            setIsLoaded(true);
-        }
-    };
+      }
+    }catch (e) {
+      // ignore
+    }
+    finally {
+      setIsLoaded(true);
+    }
+  };
 
-    useEffect(()=>{
-        void handleModelStorge();
-        // init arkose
-        void ArkoseGlobalSingleton.getInstance().loadArkoseScript();
-    },[]);
+  useEffect(()=>{
+    void handleModelStorge();
+    // init arkose
+    void ArkoseGlobalSingleton.getInstance().loadArkoseScript();
+  },[]);
 
-    const getCurrentModelKey = async () => {
-        const cbots: Ms = await getLatestState(setCurrentBots);
-        return cbots.map(model => model.botName);
-    };
+  const getCurrentModelKey = async () => {
+    const cbots: Ms = await getLatestState(setCurrentBots);
+    return cbots.map(model => model.botName);
+  };
 
-    const saveCurrentBotsKeyLocal = async () => {
-        void storage.set("currentModelsKey", await getCurrentModelKey());
-        Logger.log('s-get', storage.get("currentModelsKey"));
-    };
+  const saveCurrentBotsKeyLocal = async () => {
+    void storage.set("currentModelsKey", await getCurrentModelKey());
+    Logger.log('s-get', storage.get("currentModelsKey"));
+  };
 
-    return (
-        <ModelManagementContext.Provider value={{currentBots, allModels, categoryModels, setCurrentBots: setCurrentBots, saveCurrentBotsKeyLocal}}>
-            {isLoaded && children}
-        </ModelManagementContext.Provider>
-    );
+  return (
+    <ModelManagementContext.Provider value={{currentBots, allModels, categoryModels, setCurrentBots: setCurrentBots, saveCurrentBotsKeyLocal}}>
+      {isLoaded && children}
+    </ModelManagementContext.Provider>
+  );
 }

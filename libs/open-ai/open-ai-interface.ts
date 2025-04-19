@@ -111,22 +111,22 @@ export enum ResponseMessageType {
 }
 
 export class ConversationResponse {
-    conversation_id?: string;
-    message_id?: string;
-    message_text?: string;
-    title?: string;
-    message_type: ResponseMessageType;
-    error?: ChatError;
-    appendix?: ConversationMessageAppendix;
-    adaptiveCards?: any;
+  conversation_id?: string;
+  message_id?: string;
+  message_text?: string;
+  title?: string;
+  message_type: ResponseMessageType;
+  error?: ChatError;
+  appendix?: ConversationMessageAppendix;
+  adaptiveCards?: any;
 
-    constructor({conversation_id, message_id, message_text,  message_type,title, error, appendix}: {conversation_id?: string, parent_message_id?: string, message_id?: string, message_text?: string, message_type: ResponseMessageType, title?: string, error?: ChatError, appendix?: ConversationMessageAppendix}) {
-        this.conversation_id = conversation_id;
-        this.message_id = message_id;
-        this.message_text = message_text;
-        this.message_type = message_type;
-        this.error = error;
-        this.title = title;
-        this.appendix = appendix;
-    }
+  constructor({conversation_id, message_id, message_text,  message_type,title, error, appendix}: {conversation_id?: string, parent_message_id?: string, message_id?: string, message_text?: string, message_type: ResponseMessageType, title?: string, error?: ChatError, appendix?: ConversationMessageAppendix}) {
+    this.conversation_id = conversation_id;
+    this.message_id = message_id;
+    this.message_text = message_text;
+    this.message_type = message_type;
+    this.error = error;
+    this.title = title;
+    this.appendix = appendix;
+  }
 }

@@ -16,95 +16,95 @@ import lottie from "lottie-web";
 import CommonShortcutProvider from "~provider/CommonShortcutProvider";
 
 const guideList = [
-    {
-        video: "https://d2fglovq5cw24m.cloudfront.net/production/brainy/video/guide_0.mp4",
-        textImg: GuideText0,
-        textImgWidth: '55.3%',
-        btnImg: GuideBtn,
-        btnHoverImg: GuideBtnH,
-    },
-    {
-        video: "https://d2fglovq5cw24m.cloudfront.net/production/brainy/video/guide_1.mp4",
-        textImg: GuideText1,
-        textImgWidth: '90%',
-        btnImg: GuideBtn,
-        btnHoverImg: GuideBtnH,
-    },
-    {
-        video: "https://d2fglovq5cw24m.cloudfront.net/production/brainy/video/guide_2.mp4",
-        textImg: GuideText2,
-        textImgWidth: '80%',
-        btnImg: GuideBtnLast,
-        btnHoverImg: GuideBtnLastH,
-    },
+  {
+    video: "https://d2fglovq5cw24m.cloudfront.net/production/brainy/video/guide_0.mp4",
+    textImg: GuideText0,
+    textImgWidth: '55.3%',
+    btnImg: GuideBtn,
+    btnHoverImg: GuideBtnH,
+  },
+  {
+    video: "https://d2fglovq5cw24m.cloudfront.net/production/brainy/video/guide_1.mp4",
+    textImg: GuideText1,
+    textImgWidth: '90%',
+    btnImg: GuideBtn,
+    btnHoverImg: GuideBtnH,
+  },
+  {
+    video: "https://d2fglovq5cw24m.cloudfront.net/production/brainy/video/guide_2.mp4",
+    textImg: GuideText2,
+    textImgWidth: '80%',
+    btnImg: GuideBtnLast,
+    btnHoverImg: GuideBtnLastH,
+  },
 ];
 
 const ClickAnimation = () => {
-    const handRef = useRef<HTMLDivElement>(null);
+  const handRef = useRef<HTMLDivElement>(null);
 
-    useEffect(() => {
-        const animationRef = lottie.loadAnimation({
-            container: handRef!.current!, // the dom element that will contain the animation
-            renderer: 'svg',
-            loop: true,
-            autoplay: true,
-            path: chrome.runtime.getURL("/resources/guide_click.json") // the path to the animation json
-        });
-        lottie.setSpeed(4);
+  useEffect(() => {
+    const animationRef = lottie.loadAnimation({
+      container: handRef!.current!, // the dom element that will contain the animation
+      renderer: 'svg',
+      loop: true,
+      autoplay: true,
+      path: chrome.runtime.getURL("/resources/guide_click.json") // the path to the animation json
+    });
+    lottie.setSpeed(4);
 
-        return () => {
-            animationRef.destroy();
-        };
-    },[]);
+    return () => {
+      animationRef.destroy();
+    };
+  },[]);
 
-    return <div ref={handRef} className='w-[80px] h-[80px]'></div>;
+  return <div ref={handRef} className='w-[80px] h-[80px]'></div>;
 };
 
 export default function Greeting() {
-    const [step, setStep] = useState(0);
+  const [step, setStep] = useState(0);
 
-    const handleClick = async () => {
-        const val = await getLatestState(setStep);
+  const handleClick = async () => {
+    const val = await getLatestState(setStep);
 
-        if (val == 2) {
-            justOpenPanel();
-            return;
-        }
-        if (val < 2) setStep(val+1);
-    };
+    if (val == 2) {
+      justOpenPanel();
+      return;
+    }
+    if (val < 2) setStep(val+1);
+  };
 
-    return <CommonShortcutProvider><div className={'w-full h-lvh'}>
-        <div className='w-full h-full flex items-center min-w-[1360px] overflow-x-auto px-[7.8%] justify-between'
-            style={{background: `url(${GuideBg}) no-repeat center/cover`}}>
-            <img src={GuideText} className='w-[49%] h-auto' alt=""/>
+  return <CommonShortcutProvider><div className={'w-full h-lvh'}>
+    <div className='w-full h-full flex items-center min-w-[1360px] overflow-x-auto px-[7.8%] justify-between'
+      style={{background: `url(${GuideBg}) no-repeat center/cover`}}>
+      <img src={GuideText} className='w-[49%] h-auto' alt=""/>
 
-            {
-                guideList.map((item, index) => {
-                    return <div key={index} className={`flex-none w-[45%] min-w-[600px] h-fit bg-white rounded-3xl p-2 flex flex-col ${step === index ? 'block' : 'hidden'}`}>
-                        <video src={item.video} className='w-full rounded-2xl' autoPlay={true} muted={true} loop={true}></video>
-                        <div
-                            className='relative w-full flex-1   py-[3%] box-border flex flex-col items-center'>
-                            <div className='min-h-[180px] h-fit w-full flex justify-center items-center'>
-                                <img src={item.textImg} className='h-auto' style={{width: `${item.textImgWidth}`}} alt=""/>
-                            </div>
-                            <div className='w-[29.6%] h-auto relative cursor-pointer group' onClick={handleClick}>
-                                <img src={item.btnImg} className='w-full h-full group-hover:hidden' alt=""/>
-                                <img src={item.btnHoverImg} className='w-full h-full group-hover:block hidden' alt=""/>
-                                <div className="absolute right-[20px] top-[20px]">
-                                    <ClickAnimation/>
-                                </div>
-                            </div>
-                            <div className='absolute top-[-30px] left-[50%] translate-x-[-30px] w-[60px] flex'>
-                                {
-                                    guideList.map((ele, i) => {
-                                        return <div key={i} className={`w-[10px] h-[10px] mr-1 rounded-full ${i === step ? 'bg-[#0A4DFE]' : 'bg-[#333333] bg-opacity-50'}`}></div>;
-                                    })
-                                }
-                            </div>
-                        </div>
-                    </div>;
-                })
-            }
-        </div>
-    </div></CommonShortcutProvider>;
+      {
+        guideList.map((item, index) => {
+          return <div key={index} className={`flex-none w-[45%] min-w-[600px] h-fit bg-white rounded-3xl p-2 flex flex-col ${step === index ? 'block' : 'hidden'}`}>
+            <video src={item.video} className='w-full rounded-2xl' autoPlay={true} muted={true} loop={true}></video>
+            <div
+              className='relative w-full flex-1   py-[3%] box-border flex flex-col items-center'>
+              <div className='min-h-[180px] h-fit w-full flex justify-center items-center'>
+                <img src={item.textImg} className='h-auto' style={{width: `${item.textImgWidth}`}} alt=""/>
+              </div>
+              <div className='w-[29.6%] h-auto relative cursor-pointer group' onClick={handleClick}>
+                <img src={item.btnImg} className='w-full h-full group-hover:hidden' alt=""/>
+                <img src={item.btnHoverImg} className='w-full h-full group-hover:block hidden' alt=""/>
+                <div className="absolute right-[20px] top-[20px]">
+                  <ClickAnimation/>
+                </div>
+              </div>
+              <div className='absolute top-[-30px] left-[50%] translate-x-[-30px] w-[60px] flex'>
+                {
+                  guideList.map((ele, i) => {
+                    return <div key={i} className={`w-[10px] h-[10px] mr-1 rounded-full ${i === step ? 'bg-[#0A4DFE]' : 'bg-[#333333] bg-opacity-50'}`}></div>;
+                  })
+                }
+              </div>
+            </div>
+          </div>;
+        })
+      }
+    </div>
+  </div></CommonShortcutProvider>;
 }

@@ -16,6 +16,7 @@
       ]
     },
     "baseUrl": ".",
-    "strictNullChecks": true
+    "strictNullChecks": true,
+    "jsx": "react"
   }
 }
